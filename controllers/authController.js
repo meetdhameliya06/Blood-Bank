@@ -11,8 +11,19 @@ try{
             message:'User Already exists'
         })
     }
+    //hash password
     const salt = await bcrypt.genSalt(10)
-    const hashedpassword = await bcrypt.hash(req.body.hashedpassword,)
+    const hashedpassword = await bcrypt.hash(req.body.password,salt)
+    req.body.password=hashedpassword
+
+    //rest data
+    const user=new userModel(req.body)
+    await user.save()
+    return res.status(201).send({
+        success:true,
+        message:'user Registered Successfully',
+        
+    })
 }
 catch(error){
     console.log(error)

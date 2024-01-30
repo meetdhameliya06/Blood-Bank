@@ -4,10 +4,10 @@ const colors = require('colors')
 const connectDB = async () =>{
     try{
         await mongoose.connect(process.env.MONGO_URL);
-        console.log(`Connected to Mongodn Database ${mongoose.connection.host}`);
+        console.log(`Connected to Mongodn Database ${mongoose.connection.host}`.bgGreen.black);
     }
     catch(error){
-        console.log(`Mongodb Database Error ${error}`.bgGreen.black);
+        console.log(`Mongodb Database Error ${error}`.bgRed.black);
     }
 
 };
