@@ -22,7 +22,7 @@ try{
     await user.save()
     return res.status(201).send({
         success:true,
-        message:'user Registered Successfully',
+        message:'User Registered Successfully',
         user,
     })
 }
@@ -45,16 +45,26 @@ const loginController = async(req,res) => {
         if(!user){
             return res.status(404).send({
                 success:false,
-                message:'User Not Found'
-            })
+                message:"User Not Found",
+            });
         }
+        //check role
+        if(user.role !== req.body.role){
+            return res.status(500).send({
+        
+                success:false,
+                message:"role dosent match",
+        
+            });
+        }   
+
         //compare password
-        const comparePassword = await bcrypt.compare(req.body.password,user.password)
+        const comparePassword = await bcrypt.compare(req.body.password,user.password);
         if(!comparePassword)
         {
             return res.status(500).send({
                 success:false,
-                message:'Invalid Credentials'
+                message:'Invalid Credentials',
             })
         }
         const token = jwt.sign({userId:user._id},process.env.JWT_SECRET,{
@@ -64,17 +74,17 @@ const loginController = async(req,res) => {
             success:true,
             message:'Login Successfully',
             token,
-            user
+            user,
         
-        })
+        });
 
     }
     catch(error){
         res.status(500).send({
             success:false,
             message:"Error In Log in API",
-            error
-        })
+            error,
+        });
     }
 };
 

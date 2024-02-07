@@ -10,7 +10,7 @@ const router = express.Router()
 router.post('/register',registerController)
 
 //Login || get
-router.get("/login",loginController)
+router.post("/login",loginController)
 
 // GET CURRENT USER || GET
 router.get('/current-user', authMiddleware, currentUserController)
