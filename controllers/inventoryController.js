@@ -18,7 +18,8 @@ const createInventoryController = async (req,res) =>{
             throw new Error("Not a Hospital account");
         }
         //save record
-        const inventory = new inventoryModel(re,body);
+        // const inventory = new inventoryModel(req.body);
+        const inventory = new inventoryModel(req.body);
         await inventory.save()
         return res.status(201).send({
             success:true,

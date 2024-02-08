@@ -67,7 +67,7 @@ const loginController = async(req,res) => {
                 message:'Invalid Credentials',
             })
         }
-        const token = jwt.sign({userId:user._id},process.env.JWT_SECRET,{
+        const token = jwt.sign({userId: user._id}, process.env.JWT_SECRET,{
             expiresIn:'1d',
         })
         return res.status(200).send({
@@ -91,14 +91,18 @@ const loginController = async(req,res) => {
 //GET CURRENT USER
 const currentUserController = async(req,res) => {
     try{
-        const user = await userModel.findOne({_id:req.body.userId});
+        const user = await userModel.findOne({_id:req.body.userId})
         return res.status(200).send({
-            success: true,
-            message: "User fetched Successfully",
-            user,
+            success:true,
+            message:'User fetched Successfully',
+            user
         })
 
-    }
+        
+
+        }
+
+    
     catch(error){
         console.log(error);
         return res.status(500).send({
