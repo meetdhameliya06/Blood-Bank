@@ -1,16 +1,17 @@
-const userModel = require("../models/userModel");
+const mongoose = require("mongoose");
 const inventoryModel = require("../models/inventoryModel");
+const userModel = require("../models/userModel");
 
 //CREATE INVENTORY
 const createInventoryController = async (req,res) =>{
     try {
-        const {email,inventoryType}=req.body
+        const {email,inventoryType}=req.body;
         //validation
         const user = await userModel.findOne({email})
 
         if(!user) throw "User Not Found";
 
-        if(inventoryType === "in" && user.role !== 'doner') {
+        if(inventoryType === "in" && user.role !== 'donar') {
             throw new Error("Not a donar account");
         }
 
@@ -18,7 +19,7 @@ const createInventoryController = async (req,res) =>{
             throw new Error("Not a Hospital account");
         }
         //save record
-        // const inventory = new inventoryModel(req.body);
+       
         const inventory = new inventoryModel(req.body);
         await inventory.save()
         return res.status(201).send({

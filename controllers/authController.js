@@ -1,10 +1,10 @@
 const userModel = require("../models/userModel");
-const bcrypt = require('bcryptjs')
-const jwt = require('jsonwebtoken')
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 
 const registerController = async (req,res) =>{
 try{
-    const exisitingUser = await userModel.findOne({email:req.body.email})
+    const exisitingUser = await userModel.findOne({ email: req.body.email });
     //validation
     if(exisitingUser){
         return res.status(200).send({
@@ -68,7 +68,7 @@ const loginController = async(req,res) => {
             })
         }
         const token = jwt.sign({userId: user._id}, process.env.JWT_SECRET,{
-            expiresIn:'1d',
+            expiresIn: "1d",
         })
         return res.status(200).send({
             success:true,
@@ -95,7 +95,7 @@ const currentUserController = async(req,res) => {
         return res.status(200).send({
             success:true,
             message:'User fetched Successfully',
-            user
+            user,
         })
 
         
